@@ -1,0 +1,117 @@
+openapi: 3.0.1
+info:
+  title: File Upload / Download API
+  version: 1.0.0
+  description: API for file uploads and downloads
+paths:
+  /upload-files:
+    post:
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                attachments:
+                  description: files to be uploaded
+                  maxItems: 10
+                  minItems: 1
+                  type: array
+                  items:
+                    format: binary
+                    type: string
+            encoding:
+              attachments:
+                contentType: 'image/jpeg, image/png, test/csv'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileMetaInfoList'
+          description: uploaded files
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+          description: Generic error
+      operationId: uploadFiles
+      summary: upload files
+  /upload-file:
+    post:
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                attachment:
+                  format: binary
+                  description: file to be uploaded
+                  type: string
+            encoding:
+              attachment:
+                contentType: 'image/jpeg, image/png, test/csv'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileMetaInfo'
+          description: uploaded file
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+          description: Generic error
+      operationId: uploadFile
+      summary: upload file
+components:
+  schemas:
+    FileMetaInfoList:
+      description: list of FileMetaInfo objects
+      type: array
+      items:
+        $ref: '#/components/schemas/FileMetaInfo'
+    FileMetaInfo:
+      description: response object for uploaded file
+      type: object
+      properties:
+        fileName:
+          nullable: false
+          description: file name
+          type: string
+          example: test.pdf
+        downloadUrl:
+          nullable: false
+          description: download url
+          type: string
+          example: 'http://localhost/download/test.pdf'
+        contentType:
+          nullable: false
+          type: string
+          example: application/pdf
+        size:
+          format: int64
+          description: file size in kb
+          type: integer
+          example: 5
+    ApplicationError:
+      required:
+        - errorId
+        - errorMessage
+      type: object
+      properties:
+        errorId:
+          format: int32
+          description: error id
+          type: integer
+          example: 4711
+        errorMessage:
+          description: error message
+          type: string
+          example: User not found

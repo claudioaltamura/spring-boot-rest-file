@@ -1,70 +1,73 @@
 package de.claudioaltamura.spring.boot.rest.file.example;
 
-import jakarta.servlet.http.HttpServletRequest;
+import de.claudioaltamura.spring.boot.rest.file.example.api.DefaultApi;
+import de.claudioaltamura.spring.boot.rest.file.example.model.FileMetaInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FileController {
+@Slf4j
+@RestController
+public class FileController implements DefaultApi {
 
     @Autowired
-    private FileStorageService fileStorageService;
+    private StorageService storageService;
 
-    @PostMapping("/uploadFile")
-    public FileUploadResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        final var fileName = fileStorageService.store(file);
+    @Override
+    public ResponseEntity<FileMetaInfo> uploadFile(MultipartFile attachment) {
+        return ResponseEntity.ok(storeFile(attachment));
+    }
+
+    private FileMetaInfo storeFile(MultipartFile attachment) {
+        final var fileName = storageService.store(attachment);
+        log.info("storing file '{}'", fileName);
 
         final var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
 
-        return new FileUploadResponse(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize());
+        final var fileMetaInfo =  new FileMetaInfo();
+        fileMetaInfo.setFileName(fileName);
+        fileMetaInfo.setDownloadUrl(fileDownloadUri);
+        fileMetaInfo.setContentType(attachment.getContentType());
+        fileMetaInfo.setSize(attachment.getSize());
+        return fileMetaInfo;
     }
 
-    @PostMapping("/uploadMultipleFiles")
-    public List<FileUploadResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-        return Arrays.asList(files)
-                .stream()
-                .map(this::uploadFile)
+    @Override
+    public ResponseEntity<List<FileMetaInfo>> uploadFiles(List<MultipartFile> attachments) {
+        final var fileMetaInfoList = attachments.stream()
+                .map(this::storeFile)
                 .collect(Collectors.toList());
+
+        return ResponseEntity.ok(fileMetaInfoList);
     }
 
-    @GetMapping("/downloadFile/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-        final var resource = fileStorageService.loadAsResource(fileName);
-
-        String contentType = null;
+    private FileMetaInfo buildFileMetaInfo(Path path) {
+        final var fileMetaInfo =  new FileMetaInfo();
         try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException ex) {
-            //TODO sl4j
-            //logger.info("Could not determine file type.");
+            fileMetaInfo.setFileName(path.getFileName().toString());
+            fileMetaInfo.setDownloadUrl(ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/downloadFile/")
+                    .path(path.getFileName().toString())
+                    .toUriString());
+            fileMetaInfo.setContentType(Files.probeContentType(path.getFileName()));
+            fileMetaInfo.setSize(Files.size(path));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        // Fallback to the default content type if type could not be determined
-        if(contentType == null) {
-            contentType = "application/octet-stream";
-        }
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+        return fileMetaInfo;
     }
 
 }
