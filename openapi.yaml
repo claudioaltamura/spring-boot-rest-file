@@ -77,6 +77,34 @@ paths:
           description: Generic error
       operationId: uploadFile
       summary: upload file
+  /download-file/{fileName}:
+    get:
+      tags:
+        - file
+      summary: Download file
+      operationId: downloadFile
+      parameters:
+        - in: path
+          name: fileName
+          schema:
+            type: string
+          required: true
+          description: file name
+      responses:
+        '200':
+          description: file
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: byte
+                description: resource as bytes
+        '500':
+          description: Generic error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
 components:
   schemas:
     FileMetaInfoList:

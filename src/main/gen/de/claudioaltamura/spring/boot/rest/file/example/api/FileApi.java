@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T09:15:31.653493+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T10:35:14.350355+02:00[Europe/Berlin]")
 @Validated
 @Tag(name = "file", description = "API for managing files")
 public interface FileApi {
@@ -41,6 +41,41 @@ public interface FileApi {
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
+
+    /**
+     * GET /download-file/{fileName} : Download file
+     *
+     * @param fileName file name (required)
+     * @return file (status code 200)
+     *         or Generic error (status code 500)
+     */
+    @Operation(
+        operationId = "downloadFile",
+        summary = "Download file",
+        tags = { "file" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "file", content = {
+                @Content(mediaType = "application/octet-stream", schema = @Schema(implementation = byte[].class)),
+                @Content(mediaType = "application/json", schema = @Schema(implementation = byte[].class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Generic error", content = {
+                @Content(mediaType = "application/octet-stream", schema = @Schema(implementation = ApplicationError.class)),
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ApplicationError.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/download-file/{fileName}",
+        produces = { "application/octet-stream", "application/json" }
+    )
+    default ResponseEntity<byte[]> downloadFile(
+        @Parameter(name = "fileName", description = "file name", required = true, in = ParameterIn.PATH) @PathVariable("fileName") String fileName
+    ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
 
     /**
      * POST /upload-file : upload file
