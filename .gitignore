@@ -12,3 +12,4 @@ buildNumber.properties
 /.idea/.gitignore
 /.idea/
 /location-dir/
+/spring.boot.rest.file.example.iml

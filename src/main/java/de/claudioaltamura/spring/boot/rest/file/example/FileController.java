@@ -1,6 +1,6 @@
 package de.claudioaltamura.spring.boot.rest.file.example;
 
-import de.claudioaltamura.spring.boot.rest.file.example.api.DefaultApi;
+import de.claudioaltamura.spring.boot.rest.file.example.api.FileApi;
 import de.claudioaltamura.spring.boot.rest.file.example.model.FileMetaInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-public class FileController implements DefaultApi {
+public class FileController implements FileApi {
 
     @Autowired
     private StorageService storageService;

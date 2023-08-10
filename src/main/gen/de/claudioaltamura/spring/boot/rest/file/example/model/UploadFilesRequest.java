@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("uploadFiles_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-09T16:35:14.645904+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T09:15:31.653493+02:00[Europe/Berlin]")
 public class UploadFilesRequest {
 
   @Valid

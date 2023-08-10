@@ -3,9 +3,14 @@ info:
   title: File Upload / Download API
   version: 1.0.0
   description: API for file uploads and downloads
+tags:
+  - name: file
+    description: API for managing files
 paths:
   /upload-files:
     post:
+      tags:
+        - file
       requestBody:
         content:
           multipart/form-data:
@@ -41,6 +46,8 @@ paths:
       summary: upload files
   /upload-file:
     post:
+      tags:
+        - file
       requestBody:
         content:
           multipart/form-data:

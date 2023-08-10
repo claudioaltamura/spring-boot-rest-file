@@ -33,10 +33,10 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-09T16:35:14.645904+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T09:15:31.653493+02:00[Europe/Berlin]")
 @Validated
-@Tag(name = "Default", description = "the Default API")
-public interface DefaultApi {
+@Tag(name = "file", description = "API for managing files")
+public interface FileApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
@@ -52,6 +52,7 @@ public interface DefaultApi {
     @Operation(
         operationId = "uploadFile",
         summary = "upload file",
+        tags = { "file" },
         responses = {
             @ApiResponse(responseCode = "200", description = "uploaded file", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = FileMetaInfo.class))
@@ -94,6 +95,7 @@ public interface DefaultApi {
     @Operation(
         operationId = "uploadFiles",
         summary = "upload files",
+        tags = { "file" },
         responses = {
             @ApiResponse(responseCode = "200", description = "uploaded files", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = FileMetaInfo.class)))
