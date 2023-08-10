@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("uploadFiles_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T10:35:14.350355+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T11:25:14.872329+02:00[Europe/Berlin]")
 public class UploadFilesRequest {
 
   @Valid
@@ -45,7 +45,7 @@ public class UploadFilesRequest {
    * files to be uploaded
    * @return attachments
   */
-  @Valid @Size(min = 1, max = 10) 
+  @Valid 
   @Schema(name = "attachments", description = "files to be uploaded", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("attachments")
   public List<org.springframework.core.io.Resource> getAttachments() {

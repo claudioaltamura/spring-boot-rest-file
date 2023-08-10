@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T10:35:14.350355+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T11:25:14.872329+02:00[Europe/Berlin]")
 @Validated
 @Tag(name = "file", description = "API for managing files")
 public interface FileApi {
@@ -43,7 +43,7 @@ public interface FileApi {
     }
 
     /**
-     * GET /download-file/{fileName} : Download file
+     * GET /download-file/{fileName} : Downloads a file.
      *
      * @param fileName file name (required)
      * @return file (status code 200)
@@ -51,7 +51,7 @@ public interface FileApi {
      */
     @Operation(
         operationId = "downloadFile",
-        summary = "Download file",
+        summary = "Downloads a file.",
         tags = { "file" },
         responses = {
             @ApiResponse(responseCode = "200", description = "file", content = {
@@ -78,7 +78,7 @@ public interface FileApi {
 
 
     /**
-     * POST /upload-file : upload file
+     * POST /upload-file : Uploads a file.
      *
      * @param attachment file to be uploaded (optional)
      * @return uploaded file (status code 200)
@@ -86,7 +86,7 @@ public interface FileApi {
      */
     @Operation(
         operationId = "uploadFile",
-        summary = "upload file",
+        summary = "Uploads a file.",
         tags = { "file" },
         responses = {
             @ApiResponse(responseCode = "200", description = "uploaded file", content = {
@@ -109,7 +109,7 @@ public interface FileApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download/test.pdf\", \"contentType\" : \"application/pdf\" }";
+                    String exampleString = "{ \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download-file/test.pdf\", \"contentType\" : \"application/pdf\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -121,7 +121,7 @@ public interface FileApi {
 
 
     /**
-     * POST /upload-files : upload files
+     * POST /upload-files : Uploads multiple files.
      *
      * @param attachments files to be uploaded (optional)
      * @return uploaded files (status code 200)
@@ -129,7 +129,7 @@ public interface FileApi {
      */
     @Operation(
         operationId = "uploadFiles",
-        summary = "upload files",
+        summary = "Uploads multiple files.",
         tags = { "file" },
         responses = {
             @ApiResponse(responseCode = "200", description = "uploaded files", content = {
@@ -152,7 +152,7 @@ public interface FileApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download/test.pdf\", \"contentType\" : \"application/pdf\" }, { \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download/test.pdf\", \"contentType\" : \"application/pdf\" } ]";
+                    String exampleString = "[ { \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download-file/test.pdf\", \"contentType\" : \"application/pdf\" }, { \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download-file/test.pdf\", \"contentType\" : \"application/pdf\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

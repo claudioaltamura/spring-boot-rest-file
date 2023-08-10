@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  * ApplicationError
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T10:35:14.350355+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T11:25:14.872329+02:00[Europe/Berlin]")
 public class ApplicationError {
 
   private Integer errorId;
@@ -55,7 +55,7 @@ public class ApplicationError {
    * @return errorMessage
   */
   @NotNull 
-  @Schema(name = "errorMessage", example = "User not found", description = "error message", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "errorMessage", example = "Object not found", description = "error message", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("errorMessage")
   public String getErrorMessage() {
     return errorMessage;

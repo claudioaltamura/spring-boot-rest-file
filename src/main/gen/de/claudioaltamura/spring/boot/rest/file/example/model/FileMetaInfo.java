@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "FileMetaInfo", description = "response object for uploaded file")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T10:35:14.350355+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T11:25:14.872329+02:00[Europe/Berlin]")
 public class FileMetaInfo {
 
   private String fileName;
@@ -60,7 +60,7 @@ public class FileMetaInfo {
    * @return downloadUrl
   */
   
-  @Schema(name = "downloadUrl", example = "http://localhost/download/test.pdf", description = "download url", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "downloadUrl", example = "http://localhost/download-file/test.pdf", description = "download url", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("downloadUrl")
   public String getDownloadUrl() {
     return downloadUrl;

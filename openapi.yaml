@@ -19,15 +19,13 @@ paths:
               properties:
                 attachments:
                   description: files to be uploaded
-                  maxItems: 10
-                  minItems: 1
                   type: array
                   items:
                     format: binary
                     type: string
             encoding:
               attachments:
-                contentType: 'image/jpeg, image/png, test/csv'
+                contentType: application/octet-stream
         required: true
       responses:
         '200':
@@ -43,7 +41,7 @@ paths:
                 $ref: '#/components/schemas/ApplicationError'
           description: Generic error
       operationId: uploadFiles
-      summary: upload files
+      summary: Uploads multiple files.
   /upload-file:
     post:
       tags:
@@ -60,7 +58,7 @@ paths:
                   type: string
             encoding:
               attachment:
-                contentType: 'image/jpeg, image/png, test/csv'
+                contentType: application/octet-stream
         required: true
       responses:
         '200':
@@ -76,12 +74,12 @@ paths:
                 $ref: '#/components/schemas/ApplicationError'
           description: Generic error
       operationId: uploadFile
-      summary: upload file
+      summary: Uploads a file.
   /download-file/{fileName}:
     get:
       tags:
         - file
-      summary: Download file
+      summary: Downloads a file.
       operationId: downloadFile
       parameters:
         - in: path
@@ -125,7 +123,7 @@ components:
           nullable: false
           description: download url
           type: string
-          example: 'http://localhost/download/test.pdf'
+          example: 'http://localhost/download-file/test.pdf'
         contentType:
           nullable: false
           type: string
@@ -149,4 +147,4 @@ components:
         errorMessage:
           description: error message
           type: string
-          example: User not found
+          example: Object not found
