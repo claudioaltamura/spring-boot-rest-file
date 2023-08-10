@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "a02f87b7-c14f-461b-b682-822cadf21efa",
+		"name": "File Upload / Download API Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17634286"
+	},
+	"item": [
+		{
+			"name": "upload file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "attachment",
+							"contentType": "",
+							"type": "file",
+							"src": "src/test/resources/test.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/upload-file",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"upload-file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload files",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "attachments",
+							"contentType": "",
+							"type": "file",
+							"src": "src/test/resources/first.txt"
+						},
+						{
+							"key": "attachments",
+							"type": "file",
+							"src": "spring-boot-rest-file-example/src/test/resources/test.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/upload-files",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"upload-files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "download file",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/download/{{fileName}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"download",
+						"{{fileName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list files",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "fileName",
+			"value": "fileName"
+		}
+	]
+}
