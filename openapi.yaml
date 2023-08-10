@@ -7,6 +7,58 @@ tags:
   - name: file
     description: API for managing files
 paths:
+  /:
+    get:
+      tags:
+        - file
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileMetaInfoList'
+          description: listed files
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+          description: Generic error
+      operationId: listFiles
+      summary: List all files.
+  /upload-file:
+    post:
+      tags:
+        - file
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                attachment:
+                  format: binary
+                  description: file to be uploaded
+                  type: string
+            encoding:
+              attachment:
+                contentType: application/octet-stream
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileMetaInfo'
+          description: uploaded file
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+          description: Generic error
+      operationId: uploadFile
+      summary: Uploads a file.
   /upload-files:
     post:
       tags:
@@ -42,40 +94,7 @@ paths:
           description: Generic error
       operationId: uploadFiles
       summary: Uploads multiple files.
-  /upload-file:
-    post:
-      tags:
-        - file
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                attachment:
-                  format: binary
-                  description: file to be uploaded
-                  type: string
-            encoding:
-              attachment:
-                contentType: application/octet-stream
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FileMetaInfo'
-          description: uploaded file
-        '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApplicationError'
-          description: Generic error
-      operationId: uploadFile
-      summary: Uploads a file.
-  /download-file/{fileName}:
+  /download/{fileName}:
     get:
       tags:
         - file
@@ -123,7 +142,7 @@ components:
           nullable: false
           description: download url
           type: string
-          example: 'http://localhost/download-file/test.pdf'
+          example: 'http://localhost/download/test.pdf'
         contentType:
           nullable: false
           type: string

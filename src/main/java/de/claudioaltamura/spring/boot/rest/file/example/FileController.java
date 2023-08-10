@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,42 @@ public class FileController implements FileApi {
     @Autowired
     private ServletContext servletContext;
 
+
+    @Override
+    public ResponseEntity<byte[]> downloadFile(String fileName) {
+        final var resource = storageService.loadAsResource(fileName);
+
+        String contentType = null;
+        try {
+            contentType = servletContext.getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException e) {
+            throw new RuntimeException("Could not determine file type.", e);
+        }
+
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        try {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource.getContentAsByteArray());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Override
+    public ResponseEntity<List<FileMetaInfo>> listFiles() {
+        final var files = storageService.loadAll()
+                .map(this::buildFileMetaInfo)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(files);
+    }
+
     @Override
     public ResponseEntity<FileMetaInfo> uploadFile(MultipartFile attachment) {
         return ResponseEntity.ok(storeFile(attachment));
@@ -38,7 +75,7 @@ public class FileController implements FileApi {
         log.info("storing file '{}'", fileName);
 
         final var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download-file/")
+                .path("/download/")
                 .path(fileName)
                 .toUriString();
 
@@ -47,6 +84,7 @@ public class FileController implements FileApi {
         fileMetaInfo.setDownloadUrl(fileDownloadUri);
         fileMetaInfo.setContentType(attachment.getContentType());
         fileMetaInfo.setSize(attachment.getSize());
+
         return fileMetaInfo;
     }
 
@@ -61,44 +99,20 @@ public class FileController implements FileApi {
 
     private FileMetaInfo buildFileMetaInfo(Path path) {
         final var fileMetaInfo =  new FileMetaInfo();
+
         try {
             fileMetaInfo.setFileName(path.getFileName().toString());
             fileMetaInfo.setDownloadUrl(ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/download-file/")
+                    .path("/download/")
                     .path(path.getFileName().toString())
                     .toUriString());
             fileMetaInfo.setContentType(Files.probeContentType(path.getFileName()));
-            fileMetaInfo.setSize(Files.size(path));
+            final var filePath = Paths.get(path.toAbsolutePath().toString());
+            fileMetaInfo.setSize(Files.size(filePath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         return fileMetaInfo;
-    }
-
-    @Override
-    public ResponseEntity<byte[]> downloadFile(String fileName) {
-        final var resource = storageService.loadAsResource(fileName);
-
-        String contentType = null;
-        try {
-            contentType = servletContext.getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException ex) {
-            log.info("Could not determine file type.");
-        }
-
-        // Fallback to the default content type if type could not be determined
-        if(contentType == null) {
-            contentType = "application/octet-stream";
-        }
-
-        try {
-            return ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                    .body(resource.getContentAsByteArray());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

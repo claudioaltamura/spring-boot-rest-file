@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T11:25:14.872329+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T12:18:20.097885+02:00[Europe/Berlin]")
 @Validated
 @Tag(name = "file", description = "API for managing files")
 public interface FileApi {
@@ -43,7 +43,7 @@ public interface FileApi {
     }
 
     /**
-     * GET /download-file/{fileName} : Downloads a file.
+     * GET /download/{fileName} : Downloads a file.
      *
      * @param fileName file name (required)
      * @return file (status code 200)
@@ -66,12 +66,53 @@ public interface FileApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/download-file/{fileName}",
+        value = "/download/{fileName}",
         produces = { "application/octet-stream", "application/json" }
     )
     default ResponseEntity<byte[]> downloadFile(
         @Parameter(name = "fileName", description = "file name", required = true, in = ParameterIn.PATH) @PathVariable("fileName") String fileName
     ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    /**
+     * GET / : List all files.
+     *
+     * @return listed files (status code 200)
+     *         or Generic error (status code 500)
+     */
+    @Operation(
+        operationId = "listFiles",
+        summary = "List all files.",
+        tags = { "file" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "listed files", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = FileMetaInfo.class)))
+            }),
+            @ApiResponse(responseCode = "500", description = "Generic error", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ApplicationError.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<List<FileMetaInfo>> listFiles(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ { \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download/test.pdf\", \"contentType\" : \"application/pdf\" }, { \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download/test.pdf\", \"contentType\" : \"application/pdf\" } ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -109,7 +150,7 @@ public interface FileApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download-file/test.pdf\", \"contentType\" : \"application/pdf\" }";
+                    String exampleString = "{ \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download/test.pdf\", \"contentType\" : \"application/pdf\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -152,7 +193,7 @@ public interface FileApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download-file/test.pdf\", \"contentType\" : \"application/pdf\" }, { \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download-file/test.pdf\", \"contentType\" : \"application/pdf\" } ]";
+                    String exampleString = "[ { \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download/test.pdf\", \"contentType\" : \"application/pdf\" }, { \"fileName\" : \"test.pdf\", \"size\" : 5, \"downloadUrl\" : \"http://localhost/download/test.pdf\", \"contentType\" : \"application/pdf\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
