@@ -1,4 +1,4 @@
-package de.claudioaltamura.spring.boot.rest.file.example;
+package de.claudioaltamura.spring.boot.rest.file.example.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -58,9 +58,7 @@ public class FileStorageService implements StorageService {
     public Stream<Path> loadAll() {
         try {
             return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
-                    //.map(this.rootLocation::relativize)
-            ;
+                    .filter(path -> !path.equals(this.rootLocation));
         }
         catch (IOException e) {
             throw new StorageException("Failed to read stored files", e);

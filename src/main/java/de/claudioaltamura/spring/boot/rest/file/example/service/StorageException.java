@@ -1,4 +1,4 @@
-package de.claudioaltamura.spring.boot.rest.file.example;
+package de.claudioaltamura.spring.boot.rest.file.example.service;
 
 public class StorageException extends RuntimeException {
 

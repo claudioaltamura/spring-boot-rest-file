@@ -1,7 +1,8 @@
-package de.claudioaltamura.spring.boot.rest.file.example;
+package de.claudioaltamura.spring.boot.rest.file.example.controller;
 
 import de.claudioaltamura.spring.boot.rest.file.example.api.FileApi;
 import de.claudioaltamura.spring.boot.rest.file.example.model.FileMetaInfo;
+import de.claudioaltamura.spring.boot.rest.file.example.service.StorageService;
 import jakarta.servlet.ServletContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package de.claudioaltamura.spring.boot.rest.file.example;
+package de.claudioaltamura.spring.boot.rest.file.example.service;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

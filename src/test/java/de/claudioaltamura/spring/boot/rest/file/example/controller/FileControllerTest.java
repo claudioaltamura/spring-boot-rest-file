@@ -1,20 +1,17 @@
-package de.claudioaltamura.spring.boot.rest.file.example;
+package de.claudioaltamura.spring.boot.rest.file.example.controller;
 
+import de.claudioaltamura.spring.boot.rest.file.example.controller.FileController;
+import de.claudioaltamura.spring.boot.rest.file.example.service.StorageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = FileController.class)
 class FileControllerTest {
