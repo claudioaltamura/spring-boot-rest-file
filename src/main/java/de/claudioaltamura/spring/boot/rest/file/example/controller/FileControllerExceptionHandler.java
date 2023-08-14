@@ -15,7 +15,7 @@ import java.util.UUID;
 @ControllerAdvice
 public class FileControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-    static ApiError createApiError(String message) {
+    static ApiError apiError(String message) {
         final var apiError = new ApiError();
 
         apiError.setErrorId(UUID.randomUUID().toString());
@@ -26,16 +26,23 @@ public class FileControllerExceptionHandler extends ResponseEntityExceptionHandl
 
     @ExceptionHandler(StorageException.class)
     public ResponseEntity<ApiError> handleStorageException(StorageException exc) {
-        final var apiError = createApiError(exc.getMessage());
+        final var apiError = apiError(exc.getMessage());
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<ApiError> handleStorageFileNotFound(StorageFileNotFoundException exc) {
-        final var apiError = createApiError("File does not exist.");
+        final var apiError = apiError("File does not exist.");
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+    }
+
+    @ExceptionHandler(FileControllerException.class)
+    public ResponseEntity<ApiError> handleStorageFileNotFound(FileControllerException exc) {
+        final var apiError = apiError(exc.getMessage());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
     }
 
 }

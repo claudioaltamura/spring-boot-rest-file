@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -39,7 +39,7 @@ public class FileController implements FileApi {
         try {
             contentType = servletContext.getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException e) {
-            throw new RuntimeException("Could not determine file type.", e);
+            throw new FileControllerException("Could not determine file type.");
         }
 
         if(contentType == null) {
@@ -52,7 +52,7 @@ public class FileController implements FileApi {
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                     .body(resource.getContentAsByteArray());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileControllerException(e.getMessage(), e);
         }
     }
 
@@ -111,7 +111,7 @@ public class FileController implements FileApi {
             final var filePath = Paths.get(path.toAbsolutePath().toString());
             fileMetaInfo.setSize(Files.size(filePath));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileControllerException(e.getMessage(), e);
         }
 
         return fileMetaInfo;
