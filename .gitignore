@@ -11,5 +11,5 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 /.idea/.gitignore
 /.idea/
-/location-dir/
+/upload-dir/
 /spring.boot.rest.file.example.iml
