@@ -1,6 +1,6 @@
 src/main/gen/de/claudioaltamura/spring/boot/rest/file/example/api/ApiUtil.java
 src/main/gen/de/claudioaltamura/spring/boot/rest/file/example/api/FileApi.java
-src/main/gen/de/claudioaltamura/spring/boot/rest/file/example/model/ApplicationError.java
+src/main/gen/de/claudioaltamura/spring/boot/rest/file/example/model/ApiError.java
 src/main/gen/de/claudioaltamura/spring/boot/rest/file/example/model/FileMetaInfo.java
 src/main/gen/de/claudioaltamura/spring/boot/rest/file/example/model/UploadFileRequest.java
 src/main/gen/de/claudioaltamura/spring/boot/rest/file/example/model/UploadFilesRequest.java

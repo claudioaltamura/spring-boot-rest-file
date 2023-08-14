@@ -5,7 +5,7 @@
  */
 package de.claudioaltamura.spring.boot.rest.file.example.api;
 
-import de.claudioaltamura.spring.boot.rest.file.example.model.ApplicationError;
+import de.claudioaltamura.spring.boot.rest.file.example.model.ApiError;
 import de.claudioaltamura.spring.boot.rest.file.example.model.FileMetaInfo;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-14T13:02:29.081755+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-14T13:23:05.462631+02:00[Europe/Berlin]")
 @Validated
 @Tag(name = "file", description = "API for managing files")
 public interface FileApi {
@@ -59,8 +59,8 @@ public interface FileApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = byte[].class))
             }),
             @ApiResponse(responseCode = "500", description = "Generic error", content = {
-                @Content(mediaType = "application/octet-stream", schema = @Schema(implementation = ApplicationError.class)),
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ApplicationError.class))
+                @Content(mediaType = "application/octet-stream", schema = @Schema(implementation = ApiError.class)),
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))
             })
         }
     )
@@ -92,7 +92,7 @@ public interface FileApi {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = FileMetaInfo.class)))
             }),
             @ApiResponse(responseCode = "500", description = "Generic error", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ApplicationError.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))
             })
         }
     )
@@ -134,7 +134,7 @@ public interface FileApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = FileMetaInfo.class))
             }),
             @ApiResponse(responseCode = "500", description = "Generic error", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ApplicationError.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))
             })
         }
     )
@@ -177,7 +177,7 @@ public interface FileApi {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = FileMetaInfo.class)))
             }),
             @ApiResponse(responseCode = "500", description = "Generic error", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ApplicationError.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))
             })
         }
     )

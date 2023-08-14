@@ -22,7 +22,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: '#/components/schemas/ApiError'
           description: Generic error
       operationId: listFiles
       summary: List all files.
@@ -55,7 +55,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: '#/components/schemas/ApiError'
           description: Generic error
       operationId: uploadFile
       summary: Uploads a file.
@@ -90,7 +90,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: '#/components/schemas/ApiError'
           description: Generic error
       operationId: uploadFiles
       summary: Uploads multiple files.
@@ -121,7 +121,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationError'
+                $ref: '#/components/schemas/ApiError'
 components:
   schemas:
     FileMetaInfoList:
@@ -152,7 +152,7 @@ components:
           description: file size in kb
           type: integer
           example: 5
-    ApplicationError:
+    ApiError:
       required:
         - errorId
         - errorMessage

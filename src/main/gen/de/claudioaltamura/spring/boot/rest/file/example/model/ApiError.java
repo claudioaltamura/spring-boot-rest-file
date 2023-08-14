@@ -15,17 +15,17 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * ApplicationError
+ * ApiError
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-14T13:02:29.081755+02:00[Europe/Berlin]")
-public class ApplicationError {
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-14T13:23:05.462631+02:00[Europe/Berlin]")
+public class ApiError {
 
   private String errorId;
 
   private String errorMessage;
 
-  public ApplicationError errorId(String errorId) {
+  public ApiError errorId(String errorId) {
     this.errorId = errorId;
     return this;
   }
@@ -45,7 +45,7 @@ public class ApplicationError {
     this.errorId = errorId;
   }
 
-  public ApplicationError errorMessage(String errorMessage) {
+  public ApiError errorMessage(String errorMessage) {
     this.errorMessage = errorMessage;
     return this;
   }
@@ -73,9 +73,9 @@ public class ApplicationError {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ApplicationError applicationError = (ApplicationError) o;
-    return Objects.equals(this.errorId, applicationError.errorId) &&
-        Objects.equals(this.errorMessage, applicationError.errorMessage);
+    ApiError apiError = (ApiError) o;
+    return Objects.equals(this.errorId, apiError.errorId) &&
+        Objects.equals(this.errorMessage, apiError.errorMessage);
   }
 
   @Override
@@ -86,7 +86,7 @@ public class ApplicationError {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ApplicationError {\n");
+    sb.append("class ApiError {\n");
     sb.append("    errorId: ").append(toIndentedString(errorId)).append("\n");
     sb.append("    errorMessage: ").append(toIndentedString(errorMessage)).append("\n");
     sb.append("}");
