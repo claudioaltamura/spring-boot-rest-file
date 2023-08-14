@@ -18,14 +18,14 @@ import jakarta.annotation.Generated;
  * ApplicationError
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T12:18:20.097885+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-14T13:02:29.081755+02:00[Europe/Berlin]")
 public class ApplicationError {
 
-  private Integer errorId;
+  private String errorId;
 
   private String errorMessage;
 
-  public ApplicationError errorId(Integer errorId) {
+  public ApplicationError errorId(String errorId) {
     this.errorId = errorId;
     return this;
   }
@@ -37,11 +37,11 @@ public class ApplicationError {
   @NotNull 
   @Schema(name = "errorId", example = "4711", description = "error id", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("errorId")
-  public Integer getErrorId() {
+  public String getErrorId() {
     return errorId;
   }
 
-  public void setErrorId(Integer errorId) {
+  public void setErrorId(String errorId) {
     this.errorId = errorId;
   }
 

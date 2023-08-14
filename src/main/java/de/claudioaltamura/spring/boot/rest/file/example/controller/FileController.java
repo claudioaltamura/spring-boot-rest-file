@@ -1,14 +1,18 @@
 package de.claudioaltamura.spring.boot.rest.file.example.controller;
 
 import de.claudioaltamura.spring.boot.rest.file.example.api.FileApi;
+import de.claudioaltamura.spring.boot.rest.file.example.model.ApplicationError;
 import de.claudioaltamura.spring.boot.rest.file.example.model.FileMetaInfo;
+import de.claudioaltamura.spring.boot.rest.file.example.service.StorageFileNotFoundException;
 import de.claudioaltamura.spring.boot.rest.file.example.service.StorageService;
 import jakarta.servlet.ServletContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -115,5 +120,13 @@ public class FileController implements FileApi {
         }
 
         return fileMetaInfo;
+    }
+
+    @ExceptionHandler(StorageFileNotFoundException.class)
+    public ResponseEntity<ApplicationError> handleStorageFileNotFound(StorageFileNotFoundException exc) {
+        final var error = new ApplicationError();
+        error.setErrorId(UUID.randomUUID().toString());
+        error.setErrorMessage("file does not exist.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }

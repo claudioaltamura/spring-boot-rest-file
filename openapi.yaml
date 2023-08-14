@@ -159,9 +159,8 @@ components:
       type: object
       properties:
         errorId:
-          format: int32
           description: error id
-          type: integer
+          type: string
           example: 4711
         errorMessage:
           description: error message

@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("uploadFile_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-10T12:18:20.097885+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-14T13:02:29.081755+02:00[Europe/Berlin]")
 public class UploadFileRequest {
 
   private org.springframework.core.io.Resource attachment;
