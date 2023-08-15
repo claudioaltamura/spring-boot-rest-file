@@ -8,16 +8,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -32,7 +28,7 @@ class FileControllerTest {
     private StorageService storageService;
 
     @Test
-    public void shouldListAllFiles() throws Exception {
+    void shouldListAllFiles() throws Exception {
         when(this.storageService.loadAll())
                 .thenReturn(Stream.of(getTestFile()));
 
@@ -47,7 +43,7 @@ class FileControllerTest {
     }
 
     @Test
-    public void shouldDownloadFile() throws Exception {
+    void shouldDownloadFile() throws Exception {
         final var resource = new ClassPathResource("first.txt");
 
         when(this.storageService.loadAsResource(resource.getFilename())).thenReturn(resource);
