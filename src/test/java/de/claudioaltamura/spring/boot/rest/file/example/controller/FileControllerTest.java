@@ -8,9 +8,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -32,6 +35,12 @@ class FileControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].fileName").value("first.txt"))
                 .andReturn();
+
+        then(this.storageService.loadAll()).should().
+    }
+
+    private Path getTestFile() {
+        return Paths.get("src","test","resources", "first.txt");
     }
 
 }
