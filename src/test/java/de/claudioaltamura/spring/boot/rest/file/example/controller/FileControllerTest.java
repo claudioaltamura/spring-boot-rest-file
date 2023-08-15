@@ -1,5 +1,6 @@
 package de.claudioaltamura.spring.boot.rest.file.example.controller;
 
+import de.claudioaltamura.spring.boot.rest.file.example.service.StorageFileNotFoundException;
 import de.claudioaltamura.spring.boot.rest.file.example.service.StorageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,14 @@ class FileControllerTest {
                         .andReturn();
 
         assertThat(textFile.getResponse().getContentAsString()).isEqualTo( "first");
+    }
+
+    @Test
+    void should404WhenMissingFile() throws Exception {
+        when(this.storageService.loadAsResource("test.txt"))
+                .thenThrow(StorageFileNotFoundException.class);
+
+        this.mockMvc.perform(get("/download/test.txt")).andExpect(status().isNotFound());
     }
 
 }
