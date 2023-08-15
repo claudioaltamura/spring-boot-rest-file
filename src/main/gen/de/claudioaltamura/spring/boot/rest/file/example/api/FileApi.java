@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-14T13:23:05.462631+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-15T17:07:56.208482+02:00[Europe/Berlin]")
 @Validated
 @Tag(name = "file", description = "API for managing files")
 public interface FileApi {
@@ -122,7 +122,7 @@ public interface FileApi {
      * POST /upload-file : Uploads a file.
      *
      * @param attachment file to be uploaded (optional)
-     * @return uploaded file (status code 200)
+     * @return uploaded file (status code 201)
      *         or Generic error (status code 500)
      */
     @Operation(
@@ -130,7 +130,7 @@ public interface FileApi {
         summary = "Uploads a file.",
         tags = { "file" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "uploaded file", content = {
+            @ApiResponse(responseCode = "201", description = "uploaded file", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = FileMetaInfo.class))
             }),
             @ApiResponse(responseCode = "500", description = "Generic error", content = {
@@ -165,7 +165,7 @@ public interface FileApi {
      * POST /upload-files : Uploads multiple files.
      *
      * @param attachments files to be uploaded (optional)
-     * @return uploaded files (status code 200)
+     * @return uploaded files (status code 201)
      *         or Generic error (status code 500)
      */
     @Operation(
@@ -173,7 +173,7 @@ public interface FileApi {
         summary = "Uploads multiple files.",
         tags = { "file" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "uploaded files", content = {
+            @ApiResponse(responseCode = "201", description = "uploaded files", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = FileMetaInfo.class)))
             }),
             @ApiResponse(responseCode = "500", description = "Generic error", content = {

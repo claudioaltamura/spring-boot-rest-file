@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "FileMetaInfo", description = "response object for uploaded file")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-14T13:23:05.462631+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-08-15T17:07:56.208482+02:00[Europe/Berlin]")
 public class FileMetaInfo {
 
   private String fileName;

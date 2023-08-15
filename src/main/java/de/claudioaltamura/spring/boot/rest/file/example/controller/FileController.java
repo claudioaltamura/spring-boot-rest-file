@@ -7,6 +7,7 @@ import jakarta.servlet.ServletContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -68,7 +70,14 @@ public class FileController implements FileApi {
 
     @Override
     public ResponseEntity<FileMetaInfo> uploadFile(MultipartFile attachment) {
-        return ResponseEntity.ok(storeFile(attachment));
+        final FileMetaInfo fileMetaInfo = storeFile(attachment);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/download/{fileName}")
+                .buildAndExpand(fileMetaInfo.getFileName()).toUri();
+
+        return ResponseEntity.created(location).body(fileMetaInfo);
     }
 
     private FileMetaInfo storeFile(MultipartFile attachment) {
@@ -95,7 +104,7 @@ public class FileController implements FileApi {
                 .map(this::storeFile)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(fileMetaInfoList);
+        return new ResponseEntity<>(fileMetaInfoList, HttpStatus.CREATED);
     }
 
     private FileMetaInfo buildFileMetaInfo(Path path) {

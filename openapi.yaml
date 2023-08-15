@@ -45,7 +45,7 @@ paths:
                 contentType: application/octet-stream
         required: true
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
@@ -80,7 +80,7 @@ paths:
                 contentType: application/octet-stream
         required: true
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
