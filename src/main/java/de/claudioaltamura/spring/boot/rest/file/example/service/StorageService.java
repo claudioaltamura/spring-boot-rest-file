@@ -1,21 +1,20 @@
 package de.claudioaltamura.spring.boot.rest.file.example.service;
 
+import java.nio.file.Path;
+import java.util.stream.Stream;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Path;
-import java.util.stream.Stream;
-
 public interface StorageService {
-    void init();
+  void init();
 
-    String store(MultipartFile file);
+  String store(MultipartFile file);
 
-    Path load(String filename);
+  Path load(String filename);
 
-    Stream<Path> loadAll();
+  Stream<Path> loadAll();
 
-    Resource loadAsResource(String filename);
+  Resource loadAsResource(String filename);
 
-    void deleteAll();
+  void deleteAll();
 }
