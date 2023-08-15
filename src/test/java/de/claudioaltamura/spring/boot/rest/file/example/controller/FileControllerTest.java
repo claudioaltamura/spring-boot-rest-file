@@ -5,15 +5,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -28,19 +33,30 @@ class FileControllerTest {
 
     @Test
     public void shouldListAllFiles() throws Exception {
-        given(this.storageService.loadAll())
-                .willReturn(Stream.of(getTestFile()));
+        when(this.storageService.loadAll())
+                .thenReturn(Stream.of(getTestFile()));
 
         this.mockMvc.perform(get("/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].fileName").value("first.txt"))
                 .andReturn();
-
-        then(this.storageService.loadAll()).should().
     }
 
     private Path getTestFile() {
         return Paths.get("src","test","resources", "first.txt");
+    }
+
+    @Test
+    public void shouldDownloadFile() throws Exception {
+        final var resource = new ClassPathResource("first.txt");
+
+        when(this.storageService.loadAsResource(resource.getFilename())).thenReturn(resource);
+
+        final var textFile = this.mockMvc.perform(get("/download/{fileName}", resource.getFilename()))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+        assertThat(textFile.getResponse().getContentAsString()).isEqualTo( "first");
     }
 
 }
